@@ -1,0 +1,99 @@
+-- Query 1: Visualizzare tutti i dipendenti
+SELECT * FROM dipendenti;
+
+-- Query 2: Visualizzare tutte le aziende
+SELECT * FROM azienda;
+
+-- Query 3: Visualizzare tutti i prodotti
+SELECT * FROM prodotto;
+
+-- Query 4: Visualizzare nomi e cognomi dei dipendenti
+SELECT nome_dipendente, cognome_dipendente FROM dipendenti;
+
+-- Query 5: Visualizzare nome ed email delle aziende
+SELECT nome_azienda, email FROM azienda;
+
+-- Query 6: Visualizzare nome e prezzo dei prodotti
+SELECT nome, prezzo FROM prodotto;
+
+-- Query 7: Visualizzare nome e cognome dei clienti
+SELECT nome_cliente, cognome_cliente FROM cliente;
+
+-- Query 8: Contare il numero totale di dipendenti
+SELECT COUNT(*) FROM dipendenti;
+
+-- Query 9: Calcolare il prezzo medio dei prodotti
+SELECT AVG(prezzo) FROM prodotto;
+
+-- Query 10: Trovare il massimo prezzo totale tra gli ordini
+SELECT MAX(prezzo_totale) FROM ordini;
+
+-- Query 11: Visualizzare gli ordini con stato "completato"
+SELECT * FROM ordini WHERE stato = 'completato';
+
+-- Query 12: Trovare le aziende nella regione "Lombardia"
+SELECT * FROM azienda WHERE regione = 'Lombardia';
+
+-- Query 13: Visualizzare dipendenti di una specifica azienda
+SELECT * FROM dipendenti WHERE id_azienda = 1;
+
+-- Query 14: Visualizzare ordini effettuati dopo una certa data
+SELECT * FROM ordini WHERE data_ordine > '2024-01-01';
+
+-- Query 15: Ordinare i prodotti in base al prezzo in ordine decrescente
+SELECT * FROM prodotto ORDER BY prezzo DESC;
+
+-- Query 16: Trovare i clienti con indirizzo nella regione "Toscana"
+SELECT * FROM cliente WHERE regione = 'Toscana';
+
+-- Query 17: Calcolare il totale delle quantità ordinate
+SELECT SUM(quantita) FROM ordini;
+
+-- Query 18: Contare le aziende per regione
+SELECT regione, COUNT(*) FROM azienda GROUP BY regione;
+
+-- Query 19: Trovare i dipendenti più giovani
+SELECT * FROM dipendenti ORDER BY data_nascita DESC LIMIT 1;
+
+-- Query 20: Trovare il prodotto più costoso
+SELECT * FROM prodotto WHERE prezzo = (SELECT MAX(prezzo) FROM prodotto);
+
+-- Query 21: Visualizzare il totale dei prodotti di ogni azienda
+SELECT id_azienda, COUNT(*) AS totale_prodotti FROM prodotto GROUP BY id_azienda;
+
+-- Query 22: Elencare i clienti che hanno effettuato ordini
+SELECT DISTINCT cliente.id_cliente, cliente.nome_cliente, cliente.cognome_cliente 
+FROM cliente 
+JOIN ordini ON cliente.id_cliente = ordini.id_cliente;
+
+-- Query 23: Trovare il prodotto meno costoso
+SELECT * FROM prodotto WHERE prezzo = (SELECT MIN(prezzo) FROM prodotto);
+
+-- Query 24: Calcolare il totale delle vendite per prodotto
+SELECT id_prodotto, SUM(prezzo_totale) AS totale_vendite 
+FROM ordini 
+GROUP BY id_prodotto;
+
+-- Query 25: Trovare tutte le aziende con filiera "biologico"
+SELECT azienda.* FROM azienda 
+JOIN filiera ON azienda.id_filiera = filiera.id_filiera 
+WHERE filiera.biologico = TRUE;
+
+-- Query 26: Visualizzare gli ordini effettuati da un cliente specifico
+SELECT * FROM ordini WHERE id_cliente = 1;
+
+-- Query 27: Calcolare la media dell'età dei dipendenti
+SELECT AVG(YEAR(CURDATE()) - YEAR(data_nascita)) AS eta_media FROM dipendenti;
+
+-- Query 28: Contare i prodotti per peso maggiore di 1 kg
+SELECT COUNT(*) FROM prodotto WHERE peso > 1;
+
+-- Query 29: Visualizzare tutte le email dei clienti
+SELECT email FROM cliente;
+
+-- Query 30: Trovare le aziende con più di 5 dipendenti
+SELECT azienda.id_azienda, azienda.nome_azienda 
+FROM azienda 
+JOIN dipendenti ON azienda.id_azienda = dipendenti.id_azienda 
+GROUP BY azienda.id_azienda, azienda.nome_azienda 
+HAVING COUNT(dipendenti.id_dipendente) > 5;
